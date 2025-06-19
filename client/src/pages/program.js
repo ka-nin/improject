@@ -62,9 +62,9 @@ export default function ProgramsManagement() {
 
       <div className="nav-tabs">
         <button className="nav-tab" onClick={() => navigate('/dashboard')}>Dashboard</button>
-        <button className="nav-tab">Projects</button>
-        <button className="nav-tab active">Programs</button>
-        <button className="nav-tab">Reports</button>
+        <button className="nav-tab" onClick={() => navigate('/projects')}>Projects</button>
+        <button className="nav-tab" onClick={() => navigate('/program')}>Programs</button>
+        <button className="nav-tab" onClick={() => navigate('/reports')}>Reports</button>
       </div>
 
       <div className="content-container">

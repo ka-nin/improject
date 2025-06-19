@@ -21,9 +21,9 @@ const ProjectsPrograms = () => {
 
         <nav className="nav-tabs">
           <button className="nav-tab active">Dashboard</button>
-          <button className="nav-tab">Projects</button>
+          <button className="nav-tab" onClick={() => navigate('/projects')}>Projects</button>
           <button className="nav-tab" onClick={() => navigate('/program')}>Programs</button>
-          <button className="nav-tab">Reports</button>
+          <button className="nav-tab" onClick={() => navigate('/reports')}>Reports</button>
         </nav>
 
         <div className="main-content">

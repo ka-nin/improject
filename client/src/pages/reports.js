@@ -1,10 +1,12 @@
+// Reports.jsx
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './reports.css';
 
 const Reports = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // On mount, simulate statistics update and summary table
     updateStatistics();
     populateSummaryTable();
   }, []);
@@ -75,7 +77,7 @@ const Reports = () => {
 
       <div className="nav-tabs">
         <button className="nav-tab" onClick={() => navigate('/dashboard')}>Dashboard</button>
-        <button className="nav-tab">Projects</button>
+        <button className="nav-tab" onClick={() => navigate('/projects')}>Projects</button>
         <button className="nav-tab" onClick={() => navigate('/program')}>Programs</button>
         <button className="nav-tab active">Reports</button>
       </div>
@@ -171,4 +173,4 @@ const Reports = () => {
   );
 };
 
-export default Reports
+export default Reports;
