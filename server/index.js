@@ -15,6 +15,7 @@ const programRouter = require('./routes/programs');
 const projectRouter = require('./routes/project');
 const residentLogRouter = require('./routes/residentlog');
 
+
 // Health check route (optional)
 app.get('/', (req, res) => {
   res.send('Barangay 176 Backend API is running ✅');
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/programs', programRouter);
 app.use('/projects', projectRouter);
 app.use('/residentlog', residentLogRouter);
+
 
 
 // DB connection

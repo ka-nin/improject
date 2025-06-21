@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Projects = sequelize.define(
+  const Project = sequelize.define(
     "Project",
     {
       projectid: {
@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      // Add the missing fields that your routes expect
       Table: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -50,11 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: true, // This adds createdAt and updatedAt
-      tableName: "Projects", // Explicitly set table name
+      timestamps: true,
+      tableName: "Projects",
       hooks: {
         beforeCreate: (project) => {
-          // Ensure at least one type field is set
           if (!project.Table && !project.type && !project.projectType) {
             project.Table = "General"
           }
@@ -63,5 +61,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   )
 
-  return Projects
+  // Define associations
+  Project.associate = (models) => {
+    // Project has many programs
+    Project.hasMany(models.Program, {
+      foreignKey: "projid",
+      as: "programs",
+    })
+  }
+
+  return Project
 }

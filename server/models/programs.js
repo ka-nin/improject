@@ -1,56 +1,76 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('programs', {
-    programid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    projid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'programs',
-        key: 'programid'
-      }
-    },
-    name: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    datestart: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    location: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    completiondate: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'programs',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "programs_pkey",
-        unique: true,
-        fields: [
-          { name: "programid" },
-        ]
+module.exports = (sequelize, DataTypes) => {
+  const Program = sequelize.define(
+    "Program",
+    {
+      programid: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
-    ]
-  });
-};
+      projid: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        comment: "Foreign key to Projects table",
+      },
+      name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      datestart: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      location: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        defaultValue: "Planning",
+      },
+      completiondate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+      },
+      programtype: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        comment: "Type of program (Health, Education, Social Services, etc.)",
+      },
+    },
+    {
+      timestamps: true,
+      tableName: "Programs",
+      hooks: {
+        beforeCreate: (program) => {
+          if (!program.programtype) {
+            program.programtype = "General"
+          }
+        },
+      },
+    },
+  )
+
+  // Define associations
+  Program.associate = (models) => {
+    // Program belongs to Project (optional)
+    Program.belongsTo(models.Project, {
+      foreignKey: "projid",
+      as: "project",
+      allowNull: true,
+    })
+
+    // Program has many beneficiaries
+    Program.hasMany(models.ProgramBeneficiaries, {
+      foreignKey: "programid",
+      as: "beneficiaries",
+    })
+  }
+
+  return Program
+}
