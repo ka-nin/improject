@@ -1,91 +1,113 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './projects.css';
+"use client"
 
-const initialProjects = [
-  { id: 'PRJ-2025-001', type: 'Infrastructure', name: 'Road Improvement Project', startDate: '2025-03-15', endDate: '2025-08-30' },
-  { id: 'PRJ-2025-002', type: 'Health', name: 'Community Health Center Renovation', startDate: '2025-02-01', endDate: '2025-06-30' },
-  { id: 'PRJ-2025-003', type: 'Education', name: 'Youth Skills Training', startDate: '2025-02-01', endDate: '2025-05-30' },
-  { id: 'PRJ-2025-004', type: 'Social', name: 'Senior Citizens Support Program', startDate: '2025-01-15', endDate: '2025-12-15' },
-  { id: 'PRJ-2025-005', type: 'Environment', name: 'Waste Management System', startDate: '2025-04-01', endDate: '2025-09-30' }
-];
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import "./projects.css"
 
 const Projects = () => {
-  const navigate = useNavigate();
-  const [projects, setProjects] = useState(initialProjects);
-  const [filtered, setFiltered] = useState(initialProjects);
-  const [editingIndex, setEditingIndex] = useState(-1);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [form, setForm] = useState({ id: '', type: '', name: '', startDate: '', endDate: '' });
+  const navigate = useNavigate()
+  const [projects, setProjects] = useState([])
+  const [filtered, setFiltered] = useState([])
 
-  useEffect(() => setFiltered([...projects]), [projects]);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/projects")
+        const data = await res.json()
 
-  const generateProjectId = () => `PRJ-${new Date().getFullYear()}-${(projects.length + 1).toString().padStart(3, '0')}`;
+        console.log("🔍 Fetched projects:", data)
+        data.forEach((project, index) => {
+          console.log(`Project ${index + 1}:`, {
+            name: project.name,
+            id: project.id,
+            projectid: project.projectid,
+            Table: project.Table, // 🔧 UPDATED: Check "Table" column
+            allKeys: Object.keys(project),
+          })
+        })
+
+        setProjects(data)
+        setFiltered(data)
+      } catch (err) {
+        console.error("❌ Error fetching projects:", err)
+      }
+    }
+    fetchProjects()
+  }, [])
 
   const calculateDuration = (start, end) => {
-    if (!start || !end) return 'Not set';
-    const diff = Math.abs(new Date(end) - new Date(start));
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    if (days < 30) return `${days} days`;
-    if (days < 365) return `${Math.round(days / 30)} month(s)`;
-    return `${Math.round(days / 365)} year(s)`;
-  };
+    if (!start || !end) return "Not set"
+    const diff = Math.abs(new Date(end) - new Date(start))
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
+    if (days < 30) return `${days} days`
+    if (days < 365) return `${Math.round(days / 30)} month(s)`
+    return `${Math.round(days / 365)} year(s)`
+  }
 
   const handleFilter = () => {
-    const type = document.getElementById('typeFilter').value;
-    const from = document.getElementById('dateFromFilter').value;
-    const to = document.getElementById('dateToFilter').value;
-    const search = document.getElementById('nameSearch').value.toLowerCase();
-    const result = projects.filter(p => {
-      if (type && p.type !== type) return false;
-      if (from && p.startDate < from) return false;
-      if (to && p.startDate > to) return false;
-      if (search && !p.name.toLowerCase().includes(search)) return false;
-      return true;
-    });
-    setFiltered(result);
-  };
+    const type = document.getElementById("typeFilter").value
+    const from = document.getElementById("dateFromFilter").value
+    const to = document.getElementById("dateToFilter").value
+    const search = document.getElementById("nameSearch").value.toLowerCase()
+    const result = projects.filter((p) => {
+      // 🔧 UPDATED: Use "Table" column for filtering
+      if (type && p.Table !== type) return false
+      if (from && p.startDate < from) return false
+      if (to && p.startDate > to) return false
+      if (search && !p.name.toLowerCase().includes(search)) return false
+      return true
+    })
+    setFiltered(result)
+  }
 
-  const handleFormChange = (e) => setForm({ ...form, [e.target.id]: e.target.value });
+  const handleView = (project) => {
+    alert(`Project: ${project.name}\nStart: ${project.startDate}\nEnd: ${project.completionDate}`)
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newProject = { ...form };
-    if (editingIndex >= 0) {
-      const updated = [...projects];
-      updated[editingIndex] = newProject;
-      setProjects(updated);
+  const handleEdit = (project) => {
+    console.log("🔍 Edit button clicked for project:", project)
+
+    const projectId = project.projectid || project.id
+    console.log("🔍 Using project ID:", projectId)
+
+    if (projectId) {
+      navigate(`/editProject/${projectId}`)
     } else {
-      setProjects([...projects, newProject]);
+      console.error("❌ No project ID found:", project)
+      alert("❌ Cannot edit: Project ID is missing")
     }
-    closeModal();
-  };
+  }
 
-  const openAddModal = () => {
-    setForm({ id: generateProjectId(), type: '', name: '', startDate: '', endDate: '' });
-    setEditingIndex(-1);
-    setModalOpen(true);
-  };
+  const handleDelete = async (project) => {
+    const projectId = project.projectid || project.id
 
-  const openEditModal = (index) => {
-    setForm({ ...projects[index] });
-    setEditingIndex(index);
-    setModalOpen(true);
-  };
-
-  const viewProject = (project) => {
-    alert(`Project:\n${project.name}\nStart: ${project.startDate}\nEnd: ${project.endDate}`);
-  };
-
-  const deleteProject = (index) => {
-    if (window.confirm('Are you sure to delete this project?')) {
-      const updated = [...projects];
-      updated.splice(index, 1);
-      setProjects(updated);
+    if (!projectId) {
+      alert("❌ Cannot delete: Project ID is missing")
+      return
     }
-  };
 
-  const closeModal = () => setModalOpen(false);
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      try {
+        await fetch(`http://localhost:3001/projects/${projectId}`, { method: "DELETE" })
+        setProjects((prev) => prev.filter((p) => (p.projectid || p.id) !== projectId))
+        setFiltered((prev) => prev.filter((p) => (p.projectid || p.id) !== projectId))
+        alert("✅ Project deleted successfully.")
+      } catch (err) {
+        console.error("❌ Failed to delete project:", err)
+        alert("❌ Failed to delete project.")
+      }
+    }
+  }
+
+  const handleTypeClick = (type) => {
+    if (type) {
+      const typeFilter = document.getElementById("typeFilter")
+      if (typeFilter) {
+        typeFilter.value = type
+        handleFilter()
+      }
+    }
+  }
 
   return (
     <div className="projects-page">
@@ -98,16 +120,24 @@ const Projects = () => {
       </div>
 
       <div className="nav-tabs">
-        <button className="nav-tab" onClick={() => navigate('/dashboard')}>Dashboard</button>
+        <button className="nav-tab" onClick={() => navigate("/dashboard")}>
+          Dashboard
+        </button>
         <button className="nav-tab active">Projects</button>
-        <button className="nav-tab" onClick={() => navigate('/program')}>Programs</button>
-        <button className="nav-tab" onClick={() => navigate('/reports')}>Reports</button>
+        <button className="nav-tab" onClick={() => navigate("/program")}>
+          Programs
+        </button>
+        <button className="nav-tab" onClick={() => navigate("/reports")}>
+          Reports
+        </button>
       </div>
 
       <div className="content-container">
         <div className="section-header">
           <h2 className="section-title">🏗️ Projects Management</h2>
-          <button className="add-btn" onClick={openAddModal}>+ New Project</button>
+          <button className="add-btn" onClick={() => navigate("/newProject")}>
+            + New Project
+          </button>
         </div>
 
         <div className="filters">
@@ -116,9 +146,9 @@ const Projects = () => {
             <select id="typeFilter" className="filter-select" onChange={handleFilter}>
               <option value="">All Types</option>
               <option>Infrastructure</option>
-              <option>Health</option>
+              <option>Health Programs</option>
               <option>Education</option>
-              <option>Social</option>
+              <option>Social Services</option>
               <option>Environment</option>
             </select>
           </div>
@@ -132,7 +162,13 @@ const Projects = () => {
           </div>
           <div className="filter-group">
             <label className="filter-label">Search Name</label>
-            <input id="nameSearch" type="text" placeholder="Search..." className="filter-input" onKeyUp={handleFilter} />
+            <input
+              id="nameSearch"
+              type="text"
+              placeholder="Search..."
+              className="filter-input"
+              onKeyUp={handleFilter}
+            />
           </div>
         </div>
 
@@ -150,73 +186,44 @@ const Projects = () => {
           </thead>
           <tbody>
             {filtered.map((p, i) => (
-              <tr key={i}>
-                <td>{p.id}</td>
-                <td><span className={`type-badge type-${p.type.toLowerCase()}`}>{p.type}</span></td>
+              <tr key={p.projectid || p.id || i}>
+                <td>
+                  <strong>PRJ-{(p.projectid || p.id || i + 1).toString().padStart(4, "0")}</strong>
+                </td>
+                <td>
+                  {/* 🔧 UPDATED: Use "Table" column from database */}
+                  <span
+                    className={`type-badge type-${(p.Table || "").toLowerCase().replace(/\s+/g, "-")} clickable-badge`}
+                    onClick={() => handleTypeClick(p.Table)}
+                    title={`Click to filter by ${p.Table}`}
+                  >
+                    {p.Table || "No Type"}
+                  </span>
+                </td>
                 <td>{p.name}</td>
                 <td>{p.startDate}</td>
-                <td>{p.endDate || 'Not set'}</td>
-                <td><span className="duration-badge">{calculateDuration(p.startDate, p.endDate)}</span></td>
+                <td>{p.completionDate}</td>
                 <td>
-                  <button className="action-btn btn-update" onClick={() => openEditModal(i)}>Update</button>
-                  <button className="action-btn btn-view" onClick={() => viewProject(p)}>View</button>
-                  <button className="action-btn btn-delete" onClick={() => deleteProject(i)}>Delete</button>
+                  <span className="duration-badge">{calculateDuration(p.startDate, p.completionDate)}</span>
+                </td>
+                <td>
+                  <button className="action-btn btn-update" onClick={() => handleEdit(p)}>
+                    Update
+                  </button>
+                  <button className="action-btn btn-view" onClick={() => handleView(p)}>
+                    View
+                  </button>
+                  <button className="action-btn btn-delete" onClick={() => handleDelete(p)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {modalOpen && (
-        <div className="modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3 className="modal-title">{editingIndex >= 0 ? 'Edit Project' : 'Add New Project'}</h3>
-              <button className="close-btn" onClick={closeModal}>&times;</button>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Project ID</label>
-                  <input className="form-input" id="id" value={form.id} readOnly />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Project Type</label>
-                  <select className="form-select" id="type" value={form.type} onChange={handleFormChange} required>
-                    <option value="">Select Type</option>
-                    <option>Infrastructure</option>
-                    <option>Health</option>
-                    <option>Education</option>
-                    <option>Social</option>
-                    <option>Environment</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Project Name</label>
-                <input className="form-input" id="name" value={form.name} onChange={handleFormChange} required />
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Start Date</label>
-                  <input className="form-input" id="startDate" type="date" value={form.startDate} onChange={handleFormChange} required />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">End Date</label>
-                  <input className="form-input" id="endDate" type="date" value={form.endDate} onChange={handleFormChange} />
-                </div>
-              </div>
-              <div className="form-actions">
-                <button type="button" className="btn-secondary" onClick={closeModal}>Cancel</button>
-                <button type="submit" className="btn-primary">Save Project</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
-  );
-};
+  )
+}
 
-export default Projects;
+export default Projects
