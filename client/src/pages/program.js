@@ -53,14 +53,8 @@ export default function ProgramsManagement() {
 
   // Handle actions
   const handleView = (program) => {
-    alert(
-      `Program: ${program.name}\nType: ${program.programtype}\nStatus: ${program.status}\nStart: ${program.datestart}\nEnd: ${program.completiondate}\nLocation: ${program.location}\nDescription: ${program.description}`,
-    )
-  }
-
-  const handleUpdateProgram = (programId) => {
-    console.log("🔍 Navigating to edit program:", programId)
-    navigate(`/editProgram/${programId}`)
+    // Navigate to beneficiaries page instead of opening modal
+    navigate(`/program/${program.programid}/beneficiaries`)
   }
 
   const handleEdit = (program) => {
@@ -90,7 +84,8 @@ export default function ProgramsManagement() {
   }
 
   const handleBeneficiaries = (program) => {
-    navigate(`/programs/${program.programid}/beneficiaries`)
+    // FIXED: Changed from /programs to /program and /beneficiaries to /programBeneficiaries
+    navigate(`/program/${program.programid}/programBeneficiaries`)
   }
 
   if (loading) {
@@ -223,14 +218,13 @@ export default function ProgramsManagement() {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
-              <th>Beneficiaries</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredPrograms.length === 0 ? (
               <tr>
-                <td colSpan="9" style={{ textAlign: "center", padding: "40px", color: "#666" }}>
+                <td colSpan="8" style={{ textAlign: "center", padding: "40px", color: "#666" }}>
                   {programs.length === 0
                     ? "No programs found. Create your first program!"
                     : "No programs match your filters."}
@@ -264,20 +258,18 @@ export default function ProgramsManagement() {
                     </span>
                   </td>
                   <td>
-                    <button className="beneficiaries-btn" onClick={() => handleBeneficiaries(program)}>
-                      👥 View
-                    </button>
-                  </td>
-                  <td>
                     <div className="action-buttons">
                       <button className="action-btn btn-view" onClick={() => handleView(program)}>
                         View
                       </button>
-                      <button onClick={() => handleUpdateProgram(program.programid)} className="btn-update">
-                        Update
+                      <button className="action-btn btn-edit" onClick={() => handleEdit(program)}>
+                        Edit
                       </button>
                       <button className="action-btn btn-delete" onClick={() => handleDelete(program)}>
                         Delete
+                      </button>
+                      <button className="action-btn btn-beneficiaries" onClick={() => handleBeneficiaries(program)}>
+                        Beneficiaries
                       </button>
                     </div>
                   </td>

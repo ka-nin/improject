@@ -46,7 +46,6 @@ const AdminLogin = () => {
 
   return (
     <div className={styles.bodyWrapper}>
-      <div className={styles.header}></div>
 
       <div className={styles.container}>
         <div className={styles.topBar}>

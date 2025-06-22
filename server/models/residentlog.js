@@ -93,11 +93,6 @@ module.exports = (sequelize, DataTypes) => {
       as: "programBenefits",
     })
 
-    // Resident can be a program worker
-    ResidentLog.hasMany(models.ProgramWorkers, {
-      foreignKey: "residentid",
-      as: "programWork",
-    })
   }
 
   return ResidentLog

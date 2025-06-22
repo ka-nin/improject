@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "Programs",
           key: "programid",
         },
-        comment: "Foreign key to Programs table",
       },
       residentid: {
         type: DataTypes.INTEGER,
@@ -23,50 +22,25 @@ module.exports = (sequelize, DataTypes) => {
           model: "ResidentLog",
           key: "residentid",
         },
-        comment: "Foreign key to ResidentLog table",
       },
-      datejoined: {
+      date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
         defaultValue: DataTypes.NOW,
-        comment: "Date when resident joined/received benefit",
       },
-      benefittype: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        comment: "Type of benefit received (e.g., 'Food Package', 'Medical Aid', 'Educational Support')",
-      },
-      benefitReceived: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        comment: "Detailed description of what benefit was received",
-      },
-      quantity: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 1,
-        comment: "Quantity of benefit received",
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       status: {
-        type: DataTypes.ENUM("Pending", "Approved", "Distributed", "Completed", "Cancelled"),
-        allowNull: false,
-        defaultValue: "Pending",
-        comment: "Status of the benefit distribution",
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        defaultValue: "Active",
       },
       notes: {
         type: DataTypes.TEXT,
         allowNull: true,
-        comment: "Additional notes about the benefit",
-      },
-      distributedBy: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        comment: "Name of person who distributed the benefit",
-      },
-      distributionDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: true,
-        comment: "Actual date when benefit was distributed",
       },
     },
     {
@@ -74,20 +48,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "ProgramBeneficiaries",
       indexes: [
         {
-          unique: false,
-          fields: ["programid"],
-        },
-        {
-          unique: false,
-          fields: ["residentid"],
-        },
-        {
-          unique: false,
-          fields: ["datejoined"],
-        },
-        {
-          unique: false,
-          fields: ["status"],
+          unique: true,
+          fields: ["programid", "residentid"],
+          name: "unique_program_resident",
         },
       ],
     },

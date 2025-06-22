@@ -113,10 +113,12 @@ router.get("/status/:type", async (req, res) => {
 
     switch (type.toLowerCase()) {
       case "pwd":
-        whereClause = { isPWD: true }
+        // FIXED: Changed from isPWD to ispwd to match your model
+        whereClause = { ispwd: true }
         break
       case "senior":
-        whereClause = { isSenior: true }
+        // FIXED: Changed from isSenior to issenior to match your model
+        whereClause = { issenior: true }
         break
       case "active":
         whereClause = { isActive: true }

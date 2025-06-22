@@ -11,6 +11,8 @@ import CreateProgram from "./pages/createProgram"
 import EditProgram from "./pages/editProgram"
 import Residents from "./pages/residents"
 import CreateResident from "./pages/createResidents"
+import EditResident from "./pages/editResident"
+import Beneficiaries from "./pages/programBeneficiaries"
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/editProgram/:programId" element={<EditProgram />} />
         <Route path="/residents" element={<Residents />} />
         <Route path="/createResident" element={<CreateResident />} />
+        <Route path="/editResident/:residentId" element={<EditResident />} />
+        <Route path="/program/:programId/programBeneficiaries" element={<Beneficiaries />} />
       </Routes>
     </Router>
   )

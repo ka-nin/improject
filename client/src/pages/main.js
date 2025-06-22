@@ -88,46 +88,23 @@ function MainPage() {
           </div>
         </div>
 
-        <div className="main-content">
           <div
             className="main-logo"
-            style={{ backgroundImage: `url(${logoMain})` }}
+            style={{ backgroundImage: `url(${logoMain})`}}
           ></div>
-          <h1 className="projects-title">PROJECTS AND PROGRAMS</h1>
-          <div className="subtitle">
+          <div className="projects-title">PROJECTS AND PROGRAMS</div>
+
+      <div className ="iconAndSubtitle">
+        <div className="subtitle">
             <span
               className="people-icon"
               style={{ backgroundImage: `url(${logoIcon})` }}
             ></span>
             <span>Manage Barangay Bala Cons Development Initiatives</span>
-          </div>
-
-          <div className="search-filter-section">
-            <div className="search-container">
-              <span
-                className="search-icon"
-                style={{ backgroundImage: `url(${logoSearch})` }}
-              ></span>
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search Projects, Programs"
-              />
-            </div>
-
-            <div className="filter-container">
-              <select className="filter-dropdown">
-                <option value="">All categories</option>
-                <option value="infrastructure">Infrastructure</option>
-                <option value="health">Health Programs</option>
-                <option value="education">Education</option>
-                <option value="social">Social Services</option>
-                <option value="environment">Environment</option>
-              </select>
-              <span className="dropdown-arrow">▼</span>
-            </div>
-          </div>
         </div>
+      </div>
+          
+        
       </div>
     </div>
   );

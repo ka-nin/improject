@@ -15,7 +15,7 @@ body,
 }
 
 .header {
-    background: linear-gradient(135deg, #5a7c5a 0%, #4a6b4a 100%);
+    background: linear-gradient(135deg, #cba577 0%, #aa7533 100%);
     height: 40px;
     width: 100%;
 }
@@ -28,6 +28,8 @@ body,
     padding: 20px;
     max-width: 1400px;
     margin: 0 auto;
+    height: 500px;
+    border: 4px green ;
     width: 100%;
 }
 
@@ -47,7 +49,7 @@ body,
 
 .back-button,
 .backButton {
-    background: #5a7c5a;
+    background:  #725216;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -62,7 +64,7 @@ body,
 
 .back-button:hover,
 .backButton:hover {
-    background: #4a6b4a;
+    background: rgb(46, 46, 46);
 }
 
 .back-button::before,
@@ -72,11 +74,11 @@ body,
 }
 
 .timestamp {
-    background: #d4d4aa;
+    background: #FFFAF1;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 12px;
-    color: #5a5a3a;
+    color: #2c3e50;
     display: flex;
     margin-left: 150px;
     gap: 8px;
@@ -84,7 +86,7 @@ body,
 
 .timestamp::before {
     content: "●";
-    color: #5a7c5a;
+    color: #cba577;
     font-size: 8px;
 }
 
@@ -98,7 +100,7 @@ body,
 
 .login-container,
 .loginContainer {
-    background: white;
+    background: #FFFAF1;
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -110,7 +112,7 @@ body,
 .logo {
     width: 120px;
     height: 120px;
-    background: linear-gradient(135deg, #5a7c5a 0%, #4a6b4a 100%);
+    background: #725216;
     border-radius: 50%;
     margin: 0 auto 30px;
     display: flex;
@@ -124,7 +126,7 @@ body,
 
 .title {
     font-size: 32px;
-    color: #5a7c5a;
+    color: black;
     font-weight: bold;
     margin-bottom: 10px;
     letter-spacing: 2px;
@@ -173,7 +175,7 @@ body,
 .login-button,
 .loginButton {
     width: 100%;
-    background: linear-gradient(135deg, #5a7c5a 0%, #4a6b4a 100%);
+    background: linear-gradient(135deg, #cba577 0%, #aa7533 100%);
     color: white;
     border: none;
     padding: 15px;

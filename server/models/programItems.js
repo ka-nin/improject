@@ -51,14 +51,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         comment: "Total cost for all quantity",
       },
-      supplier: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-      },
-      expirationDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: true,
-      },
       status: {
         type: DataTypes.ENUM("Available", "Low Stock", "Out of Stock", "Expired"),
         allowNull: false,
