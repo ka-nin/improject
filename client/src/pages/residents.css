@@ -75,6 +75,23 @@
   font-weight: bold;
 }
 
+.add-btn {
+  background: linear-gradient(45deg, #2d5a27, #4a7c59);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+}
+
 .filters {
   display: flex;
   gap: 1rem;
@@ -105,6 +122,10 @@
   font-size: 12px !important;
 }
 
+.filter-input {
+  min-width: 200px;
+}
+
 .results-summary {
   padding: 10px;
   background: #f8f9fa;
@@ -114,13 +135,40 @@
   color: #666;
 }
 
-.programs-table {
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.residents-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
 }
 
-.programs-table th {
+.residents-table th {
   padding: 20px 18px !important;
   text-align: left !important;
   background: #f8f9fa !important;
@@ -133,7 +181,7 @@
   white-space: nowrap !important;
 }
 
-.programs-table td {
+.residents-table td {
   padding: 18px 18px !important;
   border-bottom: 1px solid #f0f0f0 !important;
   vertical-align: middle !important;
@@ -141,32 +189,26 @@
   font-size: 12px !important;
 }
 
-.program-info {
+.resident-info {
   display: flex;
   flex-direction: column;
 }
 
-.program-name {
+.resident-name {
   font-weight: 500 !important;
   color: #333 !important;
   font-size: 13px !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 4px !important;
   line-height: 1.4 !important;
 }
 
-.program-description {
-  font-size: 11px !important;
+.resident-gender {
+  font-size: 10px !important;
   color: #666 !important;
-  line-height: 1.4 !important;
-  margin-top: 4px !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
+  text-transform: uppercase;
 }
 
-.type-badge,
+.civil-status-badge,
 .status-badge {
   padding: 6px 12px !important;
   border-radius: 12px !important;
@@ -178,36 +220,54 @@
   letter-spacing: 0.3px !important;
 }
 
-.status-active {
-  background: #dcfce7;
-  color: #166534;
+.civil-single {
+  background: #e3f2fd;
+  color: #1565c0;
 }
-.status-completed {
-  background: #dbeafe;
-  color: #1e40af;
+.civil-married {
+  background: #f3e5f5;
+  color: #7b1fa2;
 }
-.status-planning {
-  background: #fef3c7;
-  color: #92400e;
+.civil-divorced {
+  background: #fff3e0;
+  color: #ef6c00;
 }
-.status-progress {
-  background: #e0e7ff;
-  color: #3730a3;
+.civil-widowed {
+  background: #fce4ec;
+  color: #c2185b;
 }
-.status-hold {
-  background: #fed7d7;
-  color: #c53030;
-}
-.status-cancelled {
-  background: #f3f4f6;
-  color: #374151;
-}
-.status-default {
-  background: #f3f4f6;
-  color: #374151;
+.civil-separated {
+  background: #f1f8e9;
+  color: #558b2f;
 }
 
-/* Fixed Action Buttons - All Same Size */
+.special-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-badge.senior {
+  background: #fff3cd;
+  color: #856404;
+}
+.status-badge.pwd {
+  background: #d4edda;
+  color: #155724;
+}
+.status-badge.regular {
+  background: #f8f9fa;
+  color: #6c757d;
+}
+.status-badge.active {
+  background: #d4edda;
+  color: #155724;
+}
+.status-badge.inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
 .action-buttons {
   display: flex !important;
   gap: 6px !important;
@@ -215,130 +275,43 @@
   justify-content: flex-start !important;
 }
 
-.action-btn,
-.btn-edit,
-.btn-view,
-.btn-update,
-.btn-delete,
-.btn-remove,
-.btn-secondary {
-  /* Reset all default button styles */
-  margin: 0 !important;
-  padding: 6px 10px !important;
-  border: none !important;
-  border-radius: 4px !important;
+.action-btn {
+  background: none !important;
+  border: 1px solid #ddd !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
   font-size: 10px !important;
   font-weight: 500 !important;
+  transition: all 0.2s !important;
+  min-width: 60px !important;
+  text-align: center !important;
   text-transform: uppercase !important;
   letter-spacing: 0.3px !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  vertical-align: middle !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-  box-sizing: border-box !important;
-  /* Fixed dimensions for all buttons */
-  width: 50px !important;
-  height: 28px !important;
-  min-width: 50px !important;
-  max-width: 50px !important;
-  min-height: 28px !important;
-  max-height: 28px !important;
-}
-
-/* Color variations only - size stays the same */
-.btn-edit {
-  background: #3b82f6 !important;
-  color: white !important;
-}
-
-.btn-edit:hover {
-  background: #2563eb !important;
-}
-
-.btn-view {
-  background: #10b981 !important;
-  color: white !important;
 }
 
 .btn-view:hover {
-  background: #059669 !important;
+  background: #f8f9fa !important;
+  border-color: #007bff !important;
+  color: #007bff !important;
 }
 
-.btn-update {
-  background: #f59e0b !important;
-  color: white !important;
+.btn-edit:hover {
+  background: #fff3cd !important;
+  border-color: #ffc107 !important;
+  color: #856404 !important;
 }
 
-.btn-update:hover {
-  background: #d97706 !important;
-}
-
-.btn-delete {
-  background: #ef4444 !important;
-  color: white !important;
+.btn-benefits:hover {
+  background: #d4edda !important;
+  border-color: #28a745 !important;
+  color: #155724 !important;
 }
 
 .btn-delete:hover {
-  background: #dc2626 !important;
-}
-
-.btn-remove {
-  background: #ef4444 !important;
-  color: white !important;
-}
-
-.btn-remove:hover {
-  background: #dc2626 !important;
-}
-
-.btn-secondary {
-  background: #6b7280 !important;
-  color: white !important;
-}
-
-.btn-secondary:hover {
-  background: #4b5563 !important;
-}
-
-/* Hover effects - consistent for all */
-.action-btn:hover,
-.btn-edit:hover,
-.btn-view:hover,
-.btn-update:hover,
-.btn-delete:hover,
-.btn-remove:hover,
-.btn-secondary:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
-}
-
-.action-btn:active,
-.btn-edit:active,
-.btn-view:active,
-.btn-update:active,
-.btn-delete:active,
-.btn-remove:active,
-.btn-secondary:active {
-  transform: translateY(0) !important;
-}
-
-/* Disabled state - consistent for all */
-.action-btn:disabled,
-.btn-edit:disabled,
-.btn-view:disabled,
-.btn-update:disabled,
-.btn-delete:disabled,
-.btn-remove:disabled,
-.btn-secondary:disabled {
-  background: #e5e7eb !important;
-  color: #9ca3af !important;
-  cursor: not-allowed !important;
-  transform: none !important;
+  background: #f8d7da !important;
+  border-color: #dc3545 !important;
+  color: #721c24 !important;
 }
 
 .loading-container,
@@ -354,9 +327,34 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .error-message {
   color: #dc3545;
   margin-bottom: 1rem;
+}
+
+.retry-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -370,8 +368,12 @@
     flex-direction: column;
   }
 
-  .programs-table th,
-  .programs-table td {
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .residents-table th,
+  .residents-table td {
     padding: 15px 12px !important;
     font-size: 11px !important;
   }
@@ -381,20 +383,21 @@
     gap: 4px !important;
   }
 
-  .action-btn,
-  .btn-edit,
-  .btn-view,
-  .btn-update,
-  .btn-delete,
-  .btn-remove,
-  .btn-secondary {
-    width: 45px !important;
-    height: 26px !important;
-    min-width: 45px !important;
-    max-width: 45px !important;
-    min-height: 26px !important;
-    max-height: 26px !important;
+  .action-btn {
     font-size: 9px !important;
-    padding: 5px 8px !important;
+    padding: 6px 10px !important;
+    min-width: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .residents-table th,
+  .residents-table td {
+    padding: 12px 8px !important;
+    font-size: 10px !important;
   }
 }

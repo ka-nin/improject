@@ -9,6 +9,8 @@ import NewProject from "./pages/newProject"
 import EditProject from "./pages/editProject"
 import CreateProgram from "./pages/createProgram"
 import EditProgram from "./pages/editProgram"
+import Residents from "./pages/residents"
+import CreateResident from "./pages/createResidents"
 
 function App() {
   return (
@@ -24,8 +26,10 @@ function App() {
         <Route path="/editProject/:projectId" element={<EditProject />} />
         <Route path="/createProgram" element={<CreateProgram />} />
         <Route path="/editProgram/:programId" element={<EditProgram />} />
+        <Route path="/residents" element={<Residents />} />
+        <Route path="/createResident" element={<CreateResident />} />
       </Routes>
-    </Router>   
+    </Router>
   )
 }
 

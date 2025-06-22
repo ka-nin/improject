@@ -127,6 +127,9 @@ const Projects = () => {
         <button className="nav-tab" onClick={() => navigate("/program")}>
           Programs
         </button>
+        <button className="nav-tab" onClick={() => navigate("/residents")}>
+          Residents
+        </button>
         <button className="nav-tab" onClick={() => navigate("/reports")}>
           Reports
         </button>

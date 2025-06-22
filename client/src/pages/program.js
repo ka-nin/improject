@@ -137,6 +137,9 @@ export default function ProgramsManagement() {
         <button className="nav-tab active" onClick={() => navigate("/program")}>
           Programs
         </button>
+        <button className="nav-tab" onClick={() => navigate("/residents")}>
+          Residents
+        </button>
         <button className="nav-tab" onClick={() => navigate("/reports")}>
           Reports
         </button>

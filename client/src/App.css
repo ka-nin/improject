@@ -36,3 +36,369 @@
     transform: rotate(360deg);
   }
 }
+
+/* ========================================
+   GLOBAL BUTTON STYLES
+   ======================================== */
+
+/* Base button reset and common styles */
+button,
+.btn,
+.action-btn {
+  box-sizing: border-box;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  min-width: 60px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* UPDATE BUTTONS - Blue */
+.btn-update,
+.action-btn.btn-update,
+button.btn-update,
+.update-btn,
+button[class*="update"],
+button[onclick*="update"],
+button[onclick*="Update"] {
+  background: #007bff !important;
+  color: white !important;
+  border: 1px solid #007bff !important;
+}
+
+.btn-update:hover,
+.action-btn.btn-update:hover,
+button.btn-update:hover,
+.update-btn:hover,
+button[class*="update"]:hover,
+button[onclick*="update"]:hover,
+button[onclick*="Update"]:hover {
+  background: #0056b3 !important;
+  border-color: #0056b3 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* EDIT BUTTONS - Orange/Yellow */
+.btn-edit,
+.action-btn.btn-edit,
+button.btn-edit,
+.edit-btn,
+button[class*="edit"],
+button[onclick*="edit"],
+button[onclick*="Edit"] {
+  background: #ffc107 !important;
+  color: #212529 !important;
+  border: 1px solid #ffc107 !important;
+}
+
+.btn-edit:hover,
+.action-btn.btn-edit:hover,
+button.btn-edit:hover,
+.edit-btn:hover,
+button[class*="edit"]:hover,
+button[onclick*="edit"]:hover,
+button[onclick*="Edit"]:hover {
+  background: #e0a800 !important;
+  border-color: #e0a800 !important;
+  color: #212529 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+/* DELETE BUTTONS - Red */
+.btn-delete,
+.action-btn.btn-delete,
+button.btn-delete,
+.delete-btn,
+button[class*="delete"],
+button[onclick*="delete"],
+button[onclick*="Delete"] {
+  background: #dc3545 !important;
+  color: white !important;
+  border: 1px solid #dc3545 !important;
+}
+
+.btn-delete:hover,
+.action-btn.btn-delete:hover,
+button.btn-delete:hover,
+.delete-btn:hover,
+button[class*="delete"]:hover,
+button[onclick*="delete"]:hover,
+button[onclick*="Delete"]:hover {
+  background: #c82333 !important;
+  border-color: #c82333 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* VIEW BUTTONS - Light Blue */
+.btn-view,
+.action-btn.btn-view,
+button.btn-view,
+.view-btn,
+button[class*="view"],
+button[onclick*="view"],
+button[onclick*="View"] {
+  background: #17a2b8 !important;
+  color: white !important;
+  border: 1px solid #17a2b8 !important;
+}
+
+.btn-view:hover,
+.action-btn.btn-view:hover,
+button.btn-view:hover,
+.view-btn:hover,
+button[class*="view"]:hover,
+button[onclick*="view"]:hover,
+button[onclick*="View"]:hover {
+  background: #138496 !important;
+  border-color: #138496 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+/* ADD/CREATE BUTTONS - Green */
+.btn-add,
+.add-btn,
+.btn-create,
+.create-btn,
+.btn-primary,
+button.btn-add,
+button.add-btn,
+button.btn-create,
+button.create-btn,
+button[class*="add"],
+button[class*="create"],
+button[onclick*="add"],
+button[onclick*="create"],
+button[onclick*="Add"],
+button[onclick*="Create"] {
+  background: linear-gradient(45deg, #28a745, #20c997) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.8rem 1.5rem !important;
+  font-size: 0.9rem !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+}
+
+.btn-add:hover,
+.add-btn:hover,
+.btn-create:hover,
+.create-btn:hover,
+.btn-primary:hover,
+button.btn-add:hover,
+button.add-btn:hover,
+button.btn-create:hover,
+button.create-btn:hover,
+button[class*="add"]:hover,
+button[class*="create"]:hover,
+button[onclick*="add"]:hover,
+button[onclick*="create"]:hover,
+button[onclick*="Add"]:hover,
+button[onclick*="Create"]:hover {
+  background: linear-gradient(45deg, #218838, #1ea080) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+}
+
+/* CANCEL BUTTONS - Gray */
+.btn-cancel,
+.cancel-btn,
+.btn-secondary,
+button.btn-cancel,
+button.cancel-btn,
+button[class*="cancel"],
+button[onclick*="cancel"],
+button[onclick*="Cancel"] {
+  background: #6c757d !important;
+  color: white !important;
+  border: 1px solid #6c757d !important;
+}
+
+.btn-cancel:hover,
+.cancel-btn:hover,
+.btn-secondary:hover,
+button.btn-cancel:hover,
+button.cancel-btn:hover,
+button[class*="cancel"]:hover,
+button[onclick*="cancel"]:hover,
+button[onclick*="Cancel"]:hover {
+  background: #5a6268 !important;
+  border-color: #5a6268 !important;
+  transform: translateY(-1px);
+}
+
+/* SUBMIT BUTTONS - Blue */
+.btn-submit,
+.submit-btn,
+button.btn-submit,
+button.submit-btn,
+button[type="submit"],
+button[class*="submit"],
+button[onclick*="submit"],
+button[onclick*="Submit"] {
+  background: #007bff !important;
+  color: white !important;
+  border: 1px solid #007bff !important;
+  padding: 12px 24px !important;
+  font-size: 1rem !important;
+}
+
+.btn-submit:hover,
+.submit-btn:hover,
+button.btn-submit:hover,
+button.submit-btn:hover,
+button[type="submit"]:hover,
+button[class*="submit"]:hover,
+button[onclick*="submit"]:hover,
+button[onclick*="Submit"]:hover {
+  background: #0056b3 !important;
+  border-color: #0056b3 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* SPECIAL BUTTONS */
+.beneficiaries-btn,
+button.beneficiaries-btn,
+button[class*="beneficiaries"] {
+  background: #17a2b8 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 14px !important;
+  font-size: 10px !important;
+}
+
+.beneficiaries-btn:hover,
+button.beneficiaries-btn:hover,
+button[class*="beneficiaries"]:hover {
+  background: #138496 !important;
+}
+
+/* DISABLED STATE for all buttons */
+button:disabled,
+.btn:disabled,
+.action-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+button:disabled:hover,
+.btn:disabled:hover,
+.action-btn:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* LOADING STATE */
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVE BUTTON SIZES */
+@media (max-width: 768px) {
+  button,
+  .btn,
+  .action-btn {
+    font-size: 9px !important;
+    padding: 6px 10px !important;
+    min-width: 50px !important;
+  }
+
+  .btn-add,
+  .add-btn,
+  .btn-create,
+  .create-btn,
+  .btn-primary {
+    padding: 0.7rem 1.2rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  button,
+  .btn,
+  .action-btn {
+    font-size: 8px !important;
+    padding: 5px 8px !important;
+    min-width: 45px !important;
+  }
+}
+
+/* FOCUS STATES for accessibility */
+button:focus-visible,
+.btn:focus-visible,
+.action-btn:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* ACTION BUTTON GROUPS */
+.action-buttons {
+  display: flex !important;
+  gap: 6px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px !important;
+  }
+}
+
+/* NAVIGATION TABS */
+.nav-tab {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: none !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+}
+
+.nav-tab.active {
+  background: #2d5a27 !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+}
+
+.nav-tab:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+}

@@ -1,61 +1,146 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../models'); // Adjust path as needed
-const ResidentLog = db.residentlog;
+const express = require("express")
+const router = express.Router()
+const { ResidentLog } = require("../models")
 
-// CREATE a new resident
-router.post('/', async (req, res) => {
+// GET all residents
+router.get("/", async (req, res) => {
   try {
-    const resident = await ResidentLog.create(req.body);
-    res.status(201).json(resident);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const residents = await ResidentLog.findAll({
+      order: [["createdAt", "DESC"]],
+    })
+    console.log("✅ Fetched residents:", residents.length)
+    res.json(residents)
+  } catch (error) {
+    console.error("❌ Error fetching residents:", error)
+    res.status(500).json({
+      error: "Failed to fetch residents",
+      details: error.message,
+    })
   }
-});
+})
 
-// READ all residents
-router.get('/', async (req, res) => {
+// GET resident by ID
+router.get("/:id", async (req, res) => {
   try {
-    const residents = await ResidentLog.findAll();
-    res.json(residents);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const resident = await ResidentLog.findByPk(req.params.id)
+
+    if (!resident) {
+      return res.status(404).json({ error: "Resident not found" })
+    }
+
+    res.json(resident)
+  } catch (error) {
+    console.error("❌ Error fetching resident:", error)
+    res.status(500).json({
+      error: "Failed to fetch resident",
+      details: error.message,
+    })
   }
-});
+})
 
-// READ one resident by ID
-router.get('/:id', async (req, res) => {
+// POST - Create new resident
+router.post("/", async (req, res) => {
   try {
-    const resident = await ResidentLog.findByPk(req.params.id);
-    if (resident) res.json(resident);
-    else res.status(404).json({ message: 'Resident not found' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log("🔍 Creating resident with data:", req.body)
+
+    const resident = await ResidentLog.create(req.body)
+    console.log("✅ Created resident:", resident.residentid)
+
+    res.status(201).json(resident)
+  } catch (error) {
+    console.error("❌ Error creating resident:", error)
+    res.status(400).json({
+      error: "Failed to create resident",
+      details: error.message,
+    })
   }
-});
+})
 
-// UPDATE resident by ID
-router.put('/:id', async (req, res) => {
+// PUT - Update resident
+router.put("/:id", async (req, res) => {
   try {
-    const updated = await ResidentLog.update(req.body, {
-      where: { residentid: req.params.id }
-    });
-    res.json({ message: 'Updated', affectedRows: updated });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.log("🔍 Updating resident:", req.params.id, "with data:", req.body)
+
+    const [updated] = await ResidentLog.update(req.body, {
+      where: { residentid: req.params.id },
+    })
+
+    if (updated) {
+      const updatedResident = await ResidentLog.findByPk(req.params.id)
+      console.log("✅ Updated resident:", updatedResident.residentid)
+      res.json(updatedResident)
+    } else {
+      res.status(404).json({ error: "Resident not found" })
+    }
+  } catch (error) {
+    console.error("❌ Error updating resident:", error)
+    res.status(400).json({
+      error: "Failed to update resident",
+      details: error.message,
+    })
   }
-});
+})
 
-// DELETE resident by ID
-router.delete('/:id', async (req, res) => {
+// DELETE resident
+router.delete("/:id", async (req, res) => {
   try {
+    console.log("🔍 Deleting resident:", req.params.id)
+
     const deleted = await ResidentLog.destroy({
-      where: { residentid: req.params.id }
-    });
-    res.json({ message: 'Deleted', affectedRows: deleted });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+      where: { residentid: req.params.id },
+    })
 
-module.exports = router;
+    if (deleted) {
+      console.log("✅ Deleted resident:", req.params.id)
+      res.json({ message: "Resident deleted successfully" })
+    } else {
+      res.status(404).json({ error: "Resident not found" })
+    }
+  } catch (error) {
+    console.error("❌ Error deleting resident:", error)
+    res.status(400).json({
+      error: "Failed to delete resident",
+      details: error.message,
+    })
+  }
+})
+
+// GET residents with special status (PWD, Senior, etc.)
+router.get("/status/:type", async (req, res) => {
+  try {
+    const { type } = req.params
+    let whereClause = {}
+
+    switch (type.toLowerCase()) {
+      case "pwd":
+        whereClause = { isPWD: true }
+        break
+      case "senior":
+        whereClause = { isSenior: true }
+        break
+      case "active":
+        whereClause = { isActive: true }
+        break
+      case "inactive":
+        whereClause = { isActive: false }
+        break
+      default:
+        return res.status(400).json({ error: "Invalid status type" })
+    }
+
+    const residents = await ResidentLog.findAll({
+      where: whereClause,
+      order: [["name", "ASC"]],
+    })
+
+    res.json(residents)
+  } catch (error) {
+    console.error("❌ Error fetching residents by status:", error)
+    res.status(500).json({
+      error: "Failed to fetch residents by status",
+      details: error.message,
+    })
+  }
+})
+
+module.exports = router

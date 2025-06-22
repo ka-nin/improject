@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true,  
         comment: "Alternative project type field",
       },
       projectType: {

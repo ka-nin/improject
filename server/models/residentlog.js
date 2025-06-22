@@ -18,34 +18,70 @@ module.exports = (sequelize, DataTypes) => {
       age: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        validate: {
+          min: 0,
+          max: 150,
+        },
       },
       contact: {
         type: DataTypes.STRING(12),
         allowNull: true,
+        validate: {
+          len: [10, 12], // Phone number validation
+        },
       },
       ispwd: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
         defaultValue: false,
-        comment: "Is Person with Disability",
+        comment: "Person with Disability status",
       },
       issenior: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
         defaultValue: false,
-        comment: "Is Senior Citizen",
+        comment: "Senior Citizen status",
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+        comment: "Active status of the resident",
       },
       civilstatus: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.ENUM("Single", "Married", "Divorced", "Widowed", "Separated"),
+        allowNull: true,
+        defaultValue: "Single",
+      },
+      // Additional fields for better tracking
+      dateOfBirth: {
+        type: DataTypes.DATEONLY,
         allowNull: true,
       },
-      residenttype: {
-        type: DataTypes.STRING(50),
+      gender: {
+        type: DataTypes.ENUM("Male", "Female", "Other"),
         allowNull: true,
-        comment: "Type of resident (Regular, PWD, Senior, etc.)",
       },
     },
     {
       timestamps: true,
       tableName: "ResidentLog",
+      hooks: {
+        beforeCreate: (resident) => {
+          // Auto-set senior status based on age
+          if (resident.age && resident.age >= 60) {
+            resident.issenior = true
+          }
+        },
+        beforeUpdate: (resident) => {
+          // Auto-update senior status if age changes
+          if (resident.age && resident.age >= 60) {
+            resident.issenior = true
+          } else if (resident.age && resident.age < 60) {
+            resident.issenior = false
+          }
+        },
+      },
     },
   )
 
@@ -54,7 +90,13 @@ module.exports = (sequelize, DataTypes) => {
     // Resident has many program beneficiaries
     ResidentLog.hasMany(models.ProgramBeneficiaries, {
       foreignKey: "residentid",
-      as: "programBeneficiaries",
+      as: "programBenefits",
+    })
+
+    // Resident can be a program worker
+    ResidentLog.hasMany(models.ProgramWorkers, {
+      foreignKey: "residentid",
+      as: "programWork",
     })
   }
 
