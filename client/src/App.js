@@ -7,6 +7,8 @@ import Reports from "./pages/reports"
 import Projects from "./pages/projects"
 import NewProject from "./pages/newProject"
 import EditProject from "./pages/editProject"
+import CreateProgram from "./pages/createProgram"
+import EditProgram from "./pages/editProgram"
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/newProject" element={<NewProject />} />
         <Route path="/editProject/:projectId" element={<EditProject />} />
+        <Route path="/createProgram" element={<CreateProgram />} />
+        <Route path="/editProgram/:programId" element={<EditProgram />} />
       </Routes>
     </Router>   
   )

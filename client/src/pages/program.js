@@ -58,6 +58,11 @@ export default function ProgramsManagement() {
     )
   }
 
+  const handleUpdateProgram = (programId) => {
+    console.log("🔍 Navigating to edit program:", programId)
+    navigate(`/editProgram/${programId}`)
+  }
+
   const handleEdit = (program) => {
     navigate(`/editProgram/${program.programid}`)
   }
@@ -140,7 +145,7 @@ export default function ProgramsManagement() {
       <div className="content-container">
         <div className="section-header">
           <h2 className="section-title">📋 Programs Management</h2>
-          <button className="add-btn" onClick={() => navigate("/newProgram")}>
+          <button className="add-btn" onClick={() => navigate("/createProgram")}>
             + New Program
           </button>
         </div>
@@ -265,7 +270,7 @@ export default function ProgramsManagement() {
                       <button className="action-btn btn-view" onClick={() => handleView(program)}>
                         View
                       </button>
-                      <button className="action-btn btn-update" onClick={() => handleEdit(program)}>
+                      <button onClick={() => handleUpdateProgram(program.programid)} className="btn-update">
                         Update
                       </button>
                       <button className="action-btn btn-delete" onClick={() => handleDelete(program)}>

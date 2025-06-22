@@ -274,7 +274,7 @@ const ProjectsPrograms = () => {
             <button className="quick-action-btn primary" onClick={() => navigate("/newProject")}>
               🏗️ Create New Project
             </button>
-            <button className="quick-action-btn secondary" onClick={() => handleAlert("Create New Program")}>
+            <button className="quick-action-btn secondary" onClick={() => navigate("/createProgram")}>
               📋 Create New Program
             </button>
             <button className="quick-action-btn warning" onClick={() => handleAlert("Assign Materials")}>

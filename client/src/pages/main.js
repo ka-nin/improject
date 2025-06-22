@@ -4,7 +4,6 @@ import './main.css';
 
 import logoMain from '../assets/Barangay 176 Logo with Modern Aesthetic and Community Focus.png';
 import logoIcon from '../assets/Barangay 176 Logo with Modern Aesthetic and Community Focus (1).png';
-import logoSearch from '../assets/Barangay 176 Logo with Modern Aesthetic and Community Focus (3).png';
 import logoClock from '../assets/Barangay 176 Logo with Modern Aesthetic and Community Focus (2).png';
 import headerImage from '../assets/boni-edsa-mgcq_2020-11-10_08-44-26.jpg';
 
@@ -93,38 +92,56 @@ function MainPage() {
             className="main-logo"
             style={{ backgroundImage: `url(${logoMain})` }}
           ></div>
-          <h1 className="projects-title">PROJECTS AND PROGRAMS</h1>
+          <h1 className="projects-title">BENEFICIARY MANAGEMENT</h1>
           <div className="subtitle">
             <span
               className="people-icon"
               style={{ backgroundImage: `url(${logoIcon})` }}
             ></span>
-            <span>Manage Barangay Bala Cons Development Initiatives</span>
+            <span>Digital Community Programs Tracking System</span>
           </div>
 
-          <div className="search-filter-section">
-            <div className="search-container">
-              <span
-                className="search-icon"
-                style={{ backgroundImage: `url(${logoSearch})` }}
-              ></span>
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search Projects, Programs"
-              />
+          <div className="system-description">
+            <div className="description-card">
+              <h3 className="card-title">Streamlined Community Service</h3>
+              <p className="card-text">
+                A comprehensive digital platform for tracking resident participation 
+                in barangay programs, ensuring transparent and efficient aid distribution.
+              </p>
             </div>
-
-            <div className="filter-container">
-              <select className="filter-dropdown">
-                <option value="">All categories</option>
-                <option value="infrastructure">Infrastructure</option>
-                <option value="health">Health Programs</option>
-                <option value="education">Education</option>
-                <option value="social">Social Services</option>
-                <option value="environment">Environment</option>
-              </select>
-              <span className="dropdown-arrow">▼</span>
+            
+            <div className="features-grid">
+              <div className="feature-item">
+                <div className="feature-icon">📊</div>
+                <div className="feature-content">
+                  <h4>Real-time Monitoring</h4>
+                  <p>Track beneficiary participation and program effectiveness instantly</p>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon">👥</div>
+                <div className="feature-content">
+                  <h4>Resident Profiling</h4>
+                  <p>Comprehensive database of community members and their needs</p>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon">🎯</div>
+                <div className="feature-content">
+                  <h4>Program Management</h4>
+                  <p>Organize and monitor various community development initiatives</p>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon">📈</div>
+                <div className="feature-content">
+                  <h4>Data-Driven Decisions</h4>
+                  <p>Generate reports for better resource allocation and planning</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
